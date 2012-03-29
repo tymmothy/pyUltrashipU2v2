@@ -1,0 +1,32 @@
+This is a Python module for reading data from the USB serial versions of
+MyWeigh Ultraship U2 scales (the first version of the scales used a USB HID
+interface; this module does not support that version).
+
+Note that it's currently only possible to read the data that is on the first
+line of the display, and the user must press the "send" button on the scale
+for every reading.  It's unknown whether those are hard limitations of the
+scale, or whether it may be possible to add that functionality.
+
+This module requires pySerial to be installed, and a recent (2.6 or newer)
+version of Python.  Depending on your operating system, you may also have to
+install drivers for the PL2303 USB to serial interface that the scale uses
+for communications.
+
+To install:
+
+# python setup.py install
+
+
+Example:
+
+#!/usr/bin/python
+
+import serial
+from ultraship_u2v2 import UltrashipU2v2
+
+device = serial.Serial("/dev/ttyACM0", 9600)
+scale = UltrashipU2v2(device)
+
+while True:
+    print "%s" % (scale.read())
+
